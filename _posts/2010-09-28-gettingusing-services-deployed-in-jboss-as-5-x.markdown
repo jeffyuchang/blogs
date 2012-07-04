@@ -103,7 +103,7 @@ public class ServerConfigImpl implements ServerConfig{  ....}
 {% endhighlight %}
 
 
-With this implementation, we've defined the ServerConfig service in the *-jboss-bean.xml as following.
+With this implementation, we've defined the ServerConfig service in the -jboss-bean.xml as following.
 
 {% highlight xml %}
 <!--       ServerConfig    -->
