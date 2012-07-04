@@ -3,7 +3,7 @@ layout: page
 title: Latest Entries 
 tagline: Supporting tagline
 ---
-{% for post in site.posts limit: 6 %}
+{% for post in site.posts limit: 8 %}
 <span>{{ post.date | date: '%B' }} {{ post.date | date: '%e' }}, {{ post.date | date: '%Y' }}</span>
 <h4>
     <a href="{{post.url}}">{{ post.title }}</a>

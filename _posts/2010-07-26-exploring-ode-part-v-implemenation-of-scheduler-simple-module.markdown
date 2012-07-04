@@ -2,17 +2,6 @@
 layout: post
 title: "Exploring ODE part V: implemenation of scheduler-simple module."
 published: true
-meta: 
-  blogger_429d160645182d8e72b48e90f5e50eb3_permalink: "116144034750999348"
-  _searchme: "1"
-  _edit_last: "1"
-  _efficient_related_posts: "a:6:{i:0;a:4:{s:2:\"ID\";s:3:\"273\";s:10:\"post_title\";s:37:\"Exploring ODE Part IV: BpelServer API\";s:7:\"matches\";s:1:\"2\";s:9:\"permalink\";s:73:\"http://jeff.familyyu.net/2010/02/21/exploring-ode-part-iv-bpelserver-api/\";}i:1;a:4:{s:2:\"ID\";s:3:\"271\";s:10:\"post_title\";s:61:\"Exploring ODE Part III: architecture and modules introduction\";s:7:\"matches\";s:1:\"2\";s:9:\"permalink\";s:97:\"http://jeff.familyyu.net/2010/01/30/exploring-ode-part-iii-architecture-and-modules-introduction/\";}i:2;a:4:{s:2:\"ID\";s:3:\"270\";s:10:\"post_title\";s:38:\"Exploring ODE Part II: JACOB Framework\";s:7:\"matches\";s:1:\"2\";s:9:\"permalink\";s:74:\"http://jeff.familyyu.net/2010/01/27/exploring-ode-part-ii-jacob-framework/\";}i:3;a:4:{s:2:\"ID\";s:3:\"269\";s:10:\"post_title\";s:59:\"Exploring ODE Part I: Bpel Compiler and its internal model.\";s:7:\"matches\";s:1:\"2\";s:9:\"permalink\";s:94:\"http://jeff.familyyu.net/2010/01/26/exploring-ode-part-i-bpel-compiler-and-its-internal-model/\";}i:4;a:4:{s:2:\"ID\";s:3:\"699\";s:10:\"post_title\";s:44:\"Upgrading Hibernate 3.3.2 to Hibernate 4.0.0\";s:7:\"matches\";s:1:\"1\";s:9:\"permalink\";s:81:\"http://jeff.familyyu.net/2011/09/08/upgrading-hibernate-3-3-2-to-hibernate-4-0-0/\";}i:5;a:4:{s:2:\"ID\";s:3:\"278\";s:10:\"post_title\";s:47:\"Getting/Using services deployed in JBoss AS 5.x\";s:7:\"matches\";s:1:\"1\";s:9:\"permalink\";s:83:\"http://jeff.familyyu.net/2010/09/28/gettingusing-services-deployed-in-jboss-as-5-x/\";}}"
-  blogger_author: !binary |
-    SmVmZiBZdSAgICjkvZnmmIwp
-
-  blogger_blog: jeff.familyyu.net
-  _syntaxhighlighter_encoded: "1"
-  _relation_threshold: "1"
 tags: 
 - BPM
 - Java
@@ -29,7 +18,7 @@ In this blogpost, we will examine this module's architecture and important APIs.
 
 First is the Task API, this is the parent class for Job and SchedulerTask.
 
-[java]
+{% highlight java %}
 class Task {
     /** Scheduled date/time. */
     public long schedDate;
@@ -39,15 +28,15 @@ class Task {
         this.schedDate = schedDate;
     }
 }
-[/java]
+{% endhighlight %}
 
 
 It is very simple, just had a scheduled date for its execution.
 Next, we will see the Job's API, Job is for invoking an external service and like. we've put all of important information into the JobDetail object.
 
-[java]
+{% highlight java %}
 class Job extends Task {
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss z&quot;);
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
     String jobId;
     boolean transacted;
     JobDetails detail;
@@ -61,32 +50,30 @@ class Job extends Task {
     }
 ....
 }
-[/java]
+{% endhighlight %}
 
 
 Now, lets look at another type of Task, which is called SchedulerTask.
 
-[java]
+{% highlight java %}
 private abstract class SchedulerTask extends Task implements Runnable {
     SchedulerTask(long schedDate) {
         super(schedDate);
     }
 }
-[/java]
+{% endhighlight %}
 
 
 This is an abstract class, its subclasses are: LoadImmediateTask, UpgradeJobsTask, CheckStaleNodes.
-
-&nbsp;
 
 To understand these tasks, it is better that we look at what SimpleScheduler class defined. In Ode, the job design was based around three time horizons: "immediate", "near future", and "everything else".
 Immediate jobs (i.e. jobs that are about to be up) are written to the database and kept in an in-memory priority queue. When they execute, they are removed from the database. Near future jobs are placed in the database and assigned to the current node, however they are not stored in
 memory. Periodically jobs are "upgraded" from near-future to immediate status, at which point they get loaded into memory. Jobs that are further out in time, are placed in the database without a node identifer; when they are ready to be "upgraded" to near-future jobs they are assigned to one
 of the known live nodes. recovery is straight forward, with stale node identifiers being reassigned to known good nodes.
 
-In terms of time, we defined two variables, one is: _immediateInterval and _nearFutureInterval.
-if a job's scheduled date is between [now, now + _immediateInterval], it belongs to the "immediate" job.
-while if it is in [now + _immediateInterval, now + _nearFutureInterval], it belongs to the "near future" job then.
+In terms of time, we defined two variables, one is: \_immediateInterval and \_nearFutureInterval.
+if a job's scheduled date is between [now, now + \_immediateInterval], it belongs to the "immediate" job.
+while if it is in [now + \_immediateInterval, now + \_nearFutureInterval], it belongs to the "near future" job then.
 
 You can check the SimpleScheduler.doLoadImmediate() and SimpleScheduler.doUpgrade() respectively for its logic.
 
@@ -95,20 +82,20 @@ check if there are any stale nodes, if it has, we will move the assigned jobs ov
 
 So now, we've seen different Tasks, like Jobs and SchedulerTask. Now, we will need an interface to run these Tasks, hence TaskRunner was introduced.
 
-[java]
+{% highlight java %}
 interface TaskRunner {
     public void runTask(Task task);
 }
-[/java]
+{% endhighlight %}
 
 
 Here is the implementation from SimpleScheduler.TaskRunner() method.
 
-[java]
+{% highlight java %}
 public void runTask(final Task task) {
     if (task instanceof Job) {
         Job job = (Job)task;
-        if( job.detail.getDetailsExt().get(&quot;runnable&quot;) != null ) {
+        if( job.detail.getDetailsExt().get("runnable") != null ) {
             runPolledRunnable(job);
         } else {
             runJob(job);
@@ -119,25 +106,23 @@ public void runTask(final Task task) {
                 try {
                     ((SchedulerTask) task).run();
                 } catch (Exception ex) {
-                    __log.error(&quot;Error during SchedulerTask execution&quot;, ex);
+                    __log.error("Error during SchedulerTask execution", ex);
                 }
                 return null;
             }
         });
     }
 }
-[/java]
+{% endhighlight %}
 
 
-As I said before, once we've start BpelServer, we will start a thread running, it only gets stopped only when the BpelServer is been stopped.
-Thats called SchedulerThread.
+As I said before, once we've start BpelServer, we will start a thread running, it only gets stopped only when the BpelServer is been stopped. Thats called SchedulerThread.
 
-&nbsp;
 
 In this class, basically we had following members: PriorityBlockingQueue, this is queue for the immediate execution. TaskRunner, this is the
 container for running Task. The logic for the running is quite straight forward.
 
-[java]
+{% highlight java %}
 /**
  * Pop items off the todo queue, and send them to the task runner for processing.
  */
@@ -162,13 +147,13 @@ public void run() {
         }
     }
 }
-[/java]
+{% endhighlight %}
 
 
 Now that we've seen all of important APIs here, we will look at how we start SimpleScheduler when ODEServer is started.
 excerpt from SimpleScheduler.start() method.
 
-[java]
+{% highlight java %}
 public synchronized void start() {
     if (_running)
         return;
@@ -194,8 +179,8 @@ public synchronized void start() {
 
         });
     } catch (Exception ex) {
-        __log.error(&quot;Error retrieving node list.&quot;, ex);
-        throw new ContextException(&quot;Error retrieving node list.&quot;, ex);
+        __log.error("Error retrieving node list.", ex);
+        throw new ContextException("Error retrieving node list.", ex);
     }
 
     long now = System.currentTimeMillis();
@@ -215,9 +200,7 @@ public synchronized void start() {
     _todo.start();
     _running = true;
 }
-[/java]
+{% endhighlight %}
 
 
 Also, please noted that we had two different types of JobProcessor, one is ordinary JobProcessor, the other one is PolledRunnableJobProcessor, which is meant for running some jobs that gets run periodically.
-
-&nbsp;

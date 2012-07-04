@@ -181,16 +181,16 @@ html {
 }
 /* LINK */
 a:link {
-  color: blue;
-  text-decoration: underline;
+  color: #0A9600;
+  text-decoration: none;
 }
 a:visited {
-  color: blue;
-  text-decoration: underline;
+  color: #0A9600;
+  text-decoration: none;
 }
 a:hover {
-  color: #474747;
-  text-decoration: none;
+  color: #0A9600;
+  text-decoration: underline;
 }
 /* HIGHLIGHTER */
 pre {
@@ -248,6 +248,7 @@ pre {
 .unit-article .entry-content h5,
 .unit-article .entry-content h6 {
   color: #2d2d2d;
+  border-bottom: 1px solid black;
 }
 .unit-article .entry-content h2 a:link,
 .unit-article .entry-content h3 a:link,
@@ -305,6 +306,9 @@ pre {
 }
 .unit-article ol {
   list-style: decimal;
+  margin-left: 35px;
+  border-top:1px solid grey;
+  border-bottom: 1px solid grey;
 }
 .unit-article li h1,
 .unit-article dt h1,
@@ -356,9 +360,10 @@ pre {
   background-clip: padding-box;
 }
 .unit-article img {
-  display: block;
+  display: inline;
   margin-left: auto;
-  margin-left: auto;
+  border: 1px solid black;
+
 }
 .unit-article img.left {
   margin-right: 16px;
