@@ -244,12 +244,23 @@ pre {
 }
 .unit-article .entry-content h2,
 .unit-article .entry-content h3,
-.unit-article .entry-content h4,
-.unit-article .entry-content h5,
-.unit-article .entry-content h6 {
+.unit-article .entry-content h4{
   color: #2d2d2d;
   border-bottom: 1px solid black;
 }
+.unit-article .entry-content h5 {
+  border-bottom: 1px solid black;
+}
+.unit-article .entry-content h6 {
+  color: #2d2d2d;
+  font-weight: bold;
+}
+
+.unit-article .entry-content em {
+  background-color: #C00;
+  color:white;
+}
+
 .unit-article .entry-content h2 a:link,
 .unit-article .entry-content h3 a:link,
 .unit-article .entry-content h4 a:link,
@@ -307,8 +318,6 @@ pre {
 .unit-article ol {
   list-style: decimal;
   margin-left: 35px;
-  border-top:1px solid grey;
-  border-bottom: 1px solid grey;
 }
 .unit-article li h1,
 .unit-article dt h1,

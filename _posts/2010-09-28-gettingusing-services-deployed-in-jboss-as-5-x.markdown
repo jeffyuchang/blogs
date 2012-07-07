@@ -55,7 +55,7 @@ public class KernelLocator{
 {% endhighlight %}
 
 
-2) Use the KernelController and ControllerContext to get the service that we defined in *-jboss-bean.xml.
+2) Use the KernelController and ControllerContext to get the service that we defined in -jboss-bean.xml.
 Below is the code to actually obtain the started service out of JBoss AS.
 
 {% highlight java %}

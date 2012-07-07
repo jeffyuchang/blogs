@@ -71,9 +71,9 @@ Immediate jobs (i.e. jobs that are about to be up) are written to the database a
 memory. Periodically jobs are "upgraded" from near-future to immediate status, at which point they get loaded into memory. Jobs that are further out in time, are placed in the database without a node identifer; when they are ready to be "upgraded" to near-future jobs they are assigned to one
 of the known live nodes. recovery is straight forward, with stale node identifiers being reassigned to known good nodes.
 
-In terms of time, we defined two variables, one is: \_immediateInterval and \_nearFutureInterval.
-if a job's scheduled date is between [now, now + \_immediateInterval], it belongs to the "immediate" job.
-while if it is in [now + \_immediateInterval, now + \_nearFutureInterval], it belongs to the "near future" job then.
+In terms of time, we defined two variables, one is: \_immediateInterval and  \_nearFutureInterval.
+if a job's scheduled date is between \[now, now +  \_immediateInterval\], it belongs to the "immediate" job.
+while if it is in \[now + \_immediateInterval, now +  \_nearFutureInterval\], it belongs to the "near future" job then.
 
 You can check the SimpleScheduler.doLoadImmediate() and SimpleScheduler.doUpgrade() respectively for its logic.
 
