@@ -5,7 +5,11 @@ status: publish
 title: About
 ---
 
-My Name is Jeff Yu, I am based in Sydney and I am focusing on SOA area, such ESB, BPM, Process Governance, Web  Service etc.Before I got involved in SOA area, I had developed Enterprise Web Applications for some years in finance, government automation domains. Also I am a fan of  Linux/Mac.
+I am a coder - programmer, mainly using the Java Language for many years. I started programming from building the static HTML pages, and then the dynamic pages using ASP. After graduation, I started working on building enterprise software (Browser/Server based) by using Java in various domains, Finance, Government Automation etc. 
+
+In 2007, I Joined the IONA, started working on SOA related projects and offically started working on open source projects, like Apache CXF, Apache ServiceMix. Later I moved to work for JBoss/Red Hat, still focus on SOA area, in projects like Web Service, ESB, BPM, Process Governance etc, and still work in open source way.
+
+I am interested in many areas, such as the Programming Languages, (namely Functional Programming), Big Data, Machine Learning, Artifical Intelligence and Operating System, I strongly believed that in the future, the AI will be the big thing. 
 
 
 Committer of following open source projects.
