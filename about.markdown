@@ -9,7 +9,7 @@ I am a coder - programmer, mainly using the [Java Language](http://java.sun.com)
 
 In 2007, I Joined the IONA, started working on SOA related projects and offically started working on open source projects, like Apache CXF, Apache ServiceMix. Later I moved to work for JBoss/Red Hat, still focus on SOA area, in projects like Web Service, ESB, BPM, Process Governance etc, and still work in open source way.
 
-I am interested in many areas, such as the Programming Languages, (namely Functional Programming, like Haskell, Clojure, Scala etc), Big Data, Machine Learning, Artifical Intelligence and Operating System, I strongly believed the AI will be the next big thing in the future.
+I am interested in many areas, such as the Programming Languages, (namely Functional Programming, like Haskell, Clojure, Scala etc), Big Data, Machine Learning, Artifical Intelligence and Operating System, I strongly believe that AI will be the next big thing in the future.
 
 
 Committer of following open source projects.
