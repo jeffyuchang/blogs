@@ -7,6 +7,9 @@ tags:
 - Chinese
 - Thoughts
 
+categories:
+- Chinese
+
 type: post
 status: publish
 ---
