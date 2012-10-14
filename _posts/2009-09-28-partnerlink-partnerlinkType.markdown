@@ -19,48 +19,48 @@ BPEL Process主要包括了Activity的概念,里面有包括最基本的Receive,
 
 先看下PartnerLinkType的例子.
 
-[xml]
-&lt;plnk:partnerLinkType name=&quot;AuctionHouse_SellerLT&quot;&gt;
-&lt;plnk:role name=&quot;AuctionHouse&quot; portType=&quot;tns:sellerPT&quot; /&gt;
-&lt;plnk:role name=&quot;Seller&quot; portType=&quot;tns:sellerAnswerPT&quot; /&gt;
-&lt;/plnk:partnerLinkType&gt;
-[/xml]
+{% highlight xml %}
+ <plnk:partnerLinkType name= "AuctionHouse_SellerLT " >
+ <plnk:role name= "AuctionHouse " portType= "tns:sellerPT " / >
+ <plnk:role name= "Seller " portType= "tns:sellerAnswerPT " / >
+ </plnk:partnerLinkType >
+{% endhighlight %}
 
 注意这里定义的role可以有1个或者2个,在这个例子当中,我们看到的是2个,代表着需要两个portType(类似Java的Interface)来完成这个通道.这种情况一般是属于异步(Asynchronous)的情况. 我们也可以看做是2个的叫做双向,1个的叫做单向. 1个的一般直接是同步(Synchronous)的,可以直接获取到结果的,不用向异步那样需要一个回调方法(callback).
 
-介绍完PartnerLinkType,可以把PartnerLink想做是PartnerLinkType的实例化.但有点不同的是,在上面我们讲到PartnerLinkType是有单向和双向的,在双向的情况下,那到底是哪个方向呢?比方说,到底是从A -&gt;B 还是从 B -&gt; A呢? PartnerLink的定义就会明确规定了这个方向,比如说:
+介绍完PartnerLinkType,可以把PartnerLink想做是PartnerLinkType的实例化.但有点不同的是,在上面我们讲到PartnerLinkType是有单向和双向的,在双向的情况下,那到底是哪个方向呢?比方说,到底是从A - >B 还是从 B - > A呢? PartnerLink的定义就会明确规定了这个方向,比如说:
 
-[xml]
-&lt;partnerLink name=”seller”
+{% highlight xml %}
+ <partnerLink name=”seller”
    partnerLinkType=”AuctionHouse_SellerLT”
-   myRole=”AuctionHouse” partnerRole=”Seller”&gt;
-&lt;/partnerLink&gt;
-[/xml]
+   myRole=”AuctionHouse” partnerRole=”Seller” >
+ </partnerLink >
+{% endhighlight %}
 
 注意到这里的myRole和partnerRole的属性,这两个属性指明了PartnerLinkType的方向. 这里, MyRole是指BPEL Process, partnerRole是指外部的we service. 那么,这个例子当中就是,这个通道是从bpel process流向exernal web service.也就是有个请求发送到bpel process,然后bpel process通过这个通道,调用到外面的web service,然后外部的web service再传递结果给bpel process.
 
 这里,我们还得看下单向的情况(也就是在定义PartnerLinkType时,只有一个role的). 比方下面的这个例子.
 
-[xml]
-&lt;plnk:partnerLinkType name=&quot;loanPartnerLT&quot;&gt;
-&lt;plnk:role name=&quot;loanService&quot; portType=&quot;tns:loanServicePT&quot; /&gt;
-&lt;/plnk:partnerLinkType&gt;
-&lt;plnk:partnerLinkType name=&quot;loanApprovalLT&quot;&gt;
-&lt;plnk:role name=&quot;approver&quot; portType=&quot;tns:loanApprovalPT&quot; /&gt;
-&lt;/plnk:partnerLinkType&gt;
-[/xml]
+{% highlight xml %}
+ <plnk:partnerLinkType name= "loanPartnerLT " >
+ <plnk:role name= "loanService " portType= "tns:loanServicePT " / >
+ </plnk:partnerLinkType >
+ <plnk:partnerLinkType name= "loanApprovalLT " >
+ <plnk:role name= "approver " portType= "tns:loanApprovalPT " / >
+ </plnk:partnerLinkType >
+{% endhighlight %}
 
 再看PartnerLink的定义.
 
-[xml]
-&lt;partnerLink  name=&quot;customer&quot;
-partnerLinkType=&quot;lns:loanPartnerLT&quot;
-myRole=&quot;loanService&quot; /&gt;
+{% highlight xml %}
+ <partnerLink  name= "customer "
+partnerLinkType= "lns:loanPartnerLT "
+myRole= "loanService " / >
 
-&lt;partnerLink name=&quot;approver&quot;
-partnerLinkType=&quot;lns:loanApprovalLT&quot;
-partnerRole=&quot;approver&quot; /&gt;
-[/xml]
+ <partnerLink name= "approver "
+partnerLinkType= "lns:loanApprovalLT "
+partnerRole= "approver " / >
+{% endhighlight %}
 
 在这里,第一个customer的partnerLink定义,说明这个管道是从bpel process这个方向开的,也就是说Request的message应该是发到 Bpel Process. 相反的,第二个approver是属于partnerRole,也就是说这个Request Message应该是BPEL Process发给 partner (也就是外部真正提供服务的web service).
 
@@ -68,7 +68,7 @@ partnerRole=&quot;approver&quot; /&gt;
 
 注意,因为这个PartnerLinkType是WSDL的一个扩展点,所以很多时候,对于这个PartnerLinkType就直接定义在WSDL文件里,而不放在.bpel文件中.
 
-[Reference]
-0. <a href="http://docs.oasis-open.org/wsbpel/2.0/OS/wsbpel-v2.0-OS.html">WSBPEL 2.0 specification</a>
-1. <a href="http://infocenter.activevos.com/infocenter/ActiveVOS/v60/index.jsp?topic=/com.activee.bpel.doc/html/UG8-2.html">PartnerLinks and PartnerLinkTypes</a>
-2. <a href="http://www.zhaoxiangpeng.com/articles/bpel%E4%B8%AD%E7%9A%84partnerlink%E5%92%8Cpartnerlinktype.html">BPEL中的PartnerLink和PartnerLinkType</a>
+##### Reference#####
+* [WSBPEL 2.0 specification](http://docs.oasis-open.org/wsbpel/2.0/OS/wsbpel-v2.0-OS.html)
+* [PartnerLinks and PartnerLinkTypes](http://infocenter.activevos.com/infocenter/ActiveVOS/v60/index.jsp?topic=/com.activee.bpel.doc/html/UG8-2.html)
+* [BPEL中的PartnerLink和PartnerLinkType](http://www.zhaoxiangpeng.com/articles/bpel%E4%B8%AD%E7%9A%84partnerlink%E5%92%8Cpartnerlinktype.html)

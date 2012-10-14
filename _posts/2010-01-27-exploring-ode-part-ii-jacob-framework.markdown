@@ -2,17 +2,6 @@
 layout: post
 title: "Exploring ODE Part II: JACOB Framework"
 published: true
-meta: 
-  blogger_429d160645182d8e72b48e90f5e50eb3_permalink: "7615991349976091335"
-  _searchme: "1"
-  _edit_last: "1"
-  _efficient_related_posts: "a:7:{i:0;a:4:{s:2:\"ID\";s:3:\"269\";s:10:\"post_title\";s:59:\"Exploring ODE Part I: Bpel Compiler and its internal model.\";s:7:\"matches\";s:1:\"3\";s:9:\"permalink\";s:94:\"http://jeff.familyyu.net/2010/01/26/exploring-ode-part-i-bpel-compiler-and-its-internal-model/\";}i:1;a:4:{s:2:\"ID\";s:3:\"276\";s:10:\"post_title\";s:63:\"Exploring ODE part V: implemenation of scheduler-simple module.\";s:7:\"matches\";s:1:\"2\";s:9:\"permalink\";s:98:\"http://jeff.familyyu.net/2010/07/26/exploring-ode-part-v-implemenation-of-scheduler-simple-module/\";}i:2;a:4:{s:2:\"ID\";s:3:\"273\";s:10:\"post_title\";s:37:\"Exploring ODE Part IV: BpelServer API\";s:7:\"matches\";s:1:\"2\";s:9:\"permalink\";s:73:\"http://jeff.familyyu.net/2010/02/21/exploring-ode-part-iv-bpelserver-api/\";}i:3;a:4:{s:2:\"ID\";s:3:\"271\";s:10:\"post_title\";s:61:\"Exploring ODE Part III: architecture and modules introduction\";s:7:\"matches\";s:1:\"2\";s:9:\"permalink\";s:97:\"http://jeff.familyyu.net/2010/01/30/exploring-ode-part-iii-architecture-and-modules-introduction/\";}i:4;a:4:{s:2:\"ID\";s:3:\"699\";s:10:\"post_title\";s:44:\"Upgrading Hibernate 3.3.2 to Hibernate 4.0.0\";s:7:\"matches\";s:1:\"1\";s:9:\"permalink\";s:81:\"http://jeff.familyyu.net/2011/09/08/upgrading-hibernate-3-3-2-to-hibernate-4-0-0/\";}i:5;a:4:{s:2:\"ID\";s:3:\"278\";s:10:\"post_title\";s:47:\"Getting/Using services deployed in JBoss AS 5.x\";s:7:\"matches\";s:1:\"1\";s:9:\"permalink\";s:83:\"http://jeff.familyyu.net/2010/09/28/gettingusing-services-deployed-in-jboss-as-5-x/\";}i:6;a:4:{s:2:\"ID\";s:3:\"255\";s:10:\"post_title\";s:33:\"PartnerLink,PartnerLinkType\xE8\xAF\xA6\xE8\xA7\xA3\";s:7:\"matches\";s:1:\"1\";s:9:\"permalink\";s:81:\"http://jeff.familyyu.net/2009/09/28/partnerlinkpartnerlinktype%e8%af%a6%e8%a7%a3/\";}}"
-  blogger_author: !binary |
-    SmVmZiBZdSAgICjkvZnmmIwp
-
-  blogger_blog: jeff.familyyu.net
-  _syntaxhighlighter_encoded: "1"
-  _relation_threshold: "1"
 tags: 
 - BPEL
 - BPM
@@ -22,20 +11,20 @@ tags:
 type: post
 status: publish
 ---
-In this blog entry, we will look at the ODE's jacob framework, which is of a library taking care of concurrency processing. ODE use this lib underlying to solve the concurrency problem, ODE has <a href="http://ode.apache.org/jacob.html">a very good wiki</a> explains about this framework, but here I would like to highlight some concepts and introduce a simple example in the end.
+In this blog entry, we will look at the ODE's jacob framework, which is of a library taking care of concurrency processing. ODE use this lib underlying to solve the concurrency problem, ODE has [a very good wiki](http://ode.apache.org/jacob.html) explains about this framework, but here I would like to highlight some concepts and introduce a simple example in the end.
 
 Firstly, I am reusing the wiki page's example. Say we have a following process.
 
-[xml]
+{% highlight java %}
 1.invoke
 2.receive
 3.wait
 4.invoke
-[/xml]
+{% endhighlight %}
 
 and we have 2 parallel execution of the process, without Jacob framework the execution would be:
 
-[xml]
+{% highlight java %}
 1. Invoke1
 2. Receive1
 3. Wait1
@@ -44,11 +33,11 @@ and we have 2 parallel execution of the process, without Jacob framework the exe
 6. Receive2
 7. Wait2
 8. Invoke2
-[/xml]
+{% endhighlight %}
 
 so the above is totally sequentially, no concurrency at all. With the jacob framework, we might see following execution order.
 
-[xml]
+{% highlight java %}
 1. Invoke1
 5. Invoke2
 2. Receive1
@@ -57,27 +46,27 @@ so the above is totally sequentially, no concurrency at all. With the jacob fram
 7. Wait2
 4. Invoke1
 8. Invoke2
-[/xml]
+{% endhighlight %}
 
 From a client standpoint, we've achieved concurrency of execution even with one thread.
 
 Now, we will see following concepts in jacob:
 
-1. <span style="text-decoration: underline;">JacobRunnable, JacobObject</span>
+##### JacobRunnable, JacobObject #####
 In the wiki page, the JacobRunnable, JacobObject is described as a simple closure. Just like above example shows, here we abstract the action like 'Invoke, Receive' etc as a JacobRunnable object. Personally I also see JacobRunnable as a command pattern, which implements the run method.
 
-2. <span style="text-decoration: underline;">Channel</span>
-Once we have had the JacobRunnable object, how do we connect JacobObject and ChannelListener? Here is where Channel comes to play, we can see that JacobRunnable as one end of the channel, and ChannelListener as the other end of the channel. The Channel implementation is used JDK's dynamic proxy, you can see it from <strong>ChannelFactory</strong>.
+##### Channel #####
+Once we have had the JacobRunnable object, how do we connect JacobObject and ChannelListener? Here is where Channel comes to play, we can see that JacobRunnable as one end of the channel, and ChannelListener as the other end of the channel. The Channel implementation is used JDK's dynamic proxy, you can see it from *ChannelFactory*.
 
 For every JacobRunnable or ChannelListener, it will take a Channel class in. It is not very useful if have the JacobRunnable without means to communicate.
 
-3. <span style="text-decoration: underline;">ChannelListener</span>
-In the wiki page, it is referred as MLs (MethodList), but I'd prefer to call it as Listener. With introduction of <span style="font-weight: bold;">Channel</span> object, we are able to pass the Channel object into our next activity or child activity, but we need to have a listener mechanism for the parent activity so that once the child activity finished, it is able to get notified and continues the flow.
+##### ChannelListener#####
+In the wiki page, it is referred as MLs (MethodList), but I'd prefer to call it as Listener. With introduction of *Channel* object, we are able to pass the Channel object into our next activity or child activity, but we need to have a listener mechanism for the parent activity so that once the child activity finished, it is able to get notified and continues the flow.
 
-4. <span style="text-decoration: underline;">@ChannelType annotion</span>
+##### @ChannelType annotion#####
 In the Jacob, we are using the '@ChannelType' annotation to generate the Channel and ChannelListener interfaces in the compile time.
 
-5. <span style="text-decoration: underline;">JacobVPU, ExecutionQueueImpl</span>
+##### JacobVPU, ExecutionQueueImpl#####
 As wiki page said, here are the responsibilities of JacboVPU and ExecutionQueueImpl.
 1) JacobVPU is the place of Jacob processing.
 2) ExecutionQueueImpl is the container for all artifacts (mostly channels and reactions) managed by JacobVPU.
@@ -86,19 +75,19 @@ As wiki page said, here are the responsibilities of JacboVPU and ExecutionQueueI
 
 Now, I will introduce an example that works with Jacob API to accomplish the above example. we are having three JacobObjects(Continuation), they are INVOKE, RECEIVE, WAIT. But for the simplicity purpose, I will just have INVOKE and RECEIVE. Also we will add a channel for their communication, I called it Demo, here is the code for Demo Channel.
 
-[java]
+{% highlight java %}
 @ChannelType
 public interface Demo {
 public void onSuccess(String successInfo);
 public void onFailure(String errorString);
 }
-[/java]
+{% endhighlight %}
 
 as you read from the code, we are having two methods, one for successful case, the other is for failure. use either the maven tool or buildr, you would see the generated classes for this interface, they are DemoChannel and DemoChannelListener.
 
 Next, we will see actions.
 
-[java]
+{% highlight java %}
 static class INVOKE extends JacobRunnable {
 private DemoChannel _channel;
 
@@ -139,11 +128,11 @@ System.out.println(&quot;Receive Activity&quot;);
 _demoChannel.onSuccess(&quot;RECEIVE success...&quot;);
 }
 }
-[/java]
+{% endhighlight %}
 
 For this example, I will add another action to start our process, it is called Process.
 
-[xml]
+{% highlight java %}
 static class Process extends JacobRunnable {
 
 @Override
@@ -163,14 +152,14 @@ public void onFailure(String errorString) {
 }
 
 }
-[/xml]
+{% endhighlight %}
 
 We will talk from Process class, basically, we've created a DemoChannel, and then we use 'instance(...)' method to add the 'activity/JacobRunnable' into the queue, use the 'object(....)' to define a listener for that channel.
 In the INVOKE class, we've created a child activity that is called RECEIVE. Which puts RECEIVE class as part of INVOKE class. I know this is a bad example, it would be much better if I use a composite activity, like While or Sequence, but you know I am just being lazy. ;)
 
 At last, we will use following code to execute this example:
 
-[java]
+{% highlight java %}
 public static void main(String[] args) throws Exception {
 ExecutionQueueImpl soup = new ExecutionQueueImpl(null);
 JacobVPU vpu = new JacobVPU(soup, new Process());
@@ -179,16 +168,16 @@ while(vpu.execute()) {
 }
 
 }
-[/java]
+{% endhighlight %}
 
 Run this method, you would get following output.
 
-[xml]
+{% highlight java %}
 INVOKE Activity
 Receive Activity
 RECEIVE success...
 INVOKE Done...
 Process Done
-[/xml]
+{% endhighlight %}
 
-If you want to look at the code by yourself, it lies in the <a href="http://svn.apache.org/repos/asf/ode/trunk/jacob/">ode-jacob</a> module, it extends the <a href="http://svn.apache.org/repos/asf/ode/trunk/jacob-ap/">ode-jacob-ap</a> module. Below are some classes that you'd look into. <span style="font-weight: bold;">CommSend</span>, <span style="font-weight: bold;">CommRecv</span>. Jacob wraps the JacobRunnable as CommSend, wraps the ChannelListener as CommRecv. And then uses the <span style="font-weight: bold;">CommGroup</span> to do the match.<span style="font-weight: bold;">ExecutionQueueImpl</span> is the container for <span style="font-weight: bold;">Continuation</span>, <span style="font-weight: bold;">ExecutionObject</span>, <span style="font-weight: bold;">Channel</span> etc. In the ExecutionQueueImpl class, you would find couple static classes, like ChannelFrame, MessageFrame... these classes are mostly used for serialized and de-serialized the object.
+If you want to look at the code by yourself, it lies in the [ode-jacob](http://svn.apache.org/repos/asf/ode/trunk/jacob/) module, it extends the [ode-jacob-ap](http://svn.apache.org/repos/asf/ode/trunk/jacob-ap/) module. Below are some classes that you'd look into. *CommSend*, *CommRecv*. Jacob wraps the JacobRunnable as CommSend, wraps the ChannelListener as CommRecv. And then uses the *CommGroup* to do the match.*ExecutionQueueImpl* is the container for *Continuation*, *ExecutionObject*, *Channel* etc. In the ExecutionQueueImpl class, you would find couple static classes, like ChannelFrame, MessageFrame... these classes are mostly used for serialized and de-serialized the object.
