@@ -15,7 +15,7 @@ BPEL的出现,最主要是想提供一个业务流程(process)的语法,从另�
 
 BPEL Process主要包括了Activity的概念,里面有包括最基本的Receive,Invoke, Reply等primitive Activity,也包括了strcture activity,比如sequence, flow, case等. 那既然我们定义了这些activity,又是怎么跟外部的已有服务进行联系上呢. 那么就是通过我们所要讲的PartnerLink, PartnerLinkType来关联.
 
-我们先来看下PartnerLinkType. 我比较赞同把PartnerLinkType比喻成通道{Note: 来自于reference[2]的文章}. 可以这么想, BPEL Process是一个web service,这个服务是通过什么方法来与其他已经存在的另外一些web service(s)进行关联呢?PartnerLinkType就是定义这样的一个通道.
+我们先来看下PartnerLinkType. 我比较赞同把PartnerLinkType比喻成通道{Note: 来自于reference2的文章}. 可以这么想, BPEL Process是一个web service,这个服务是通过什么方法来与其他已经存在的另外一些web service(s)进行关联呢?PartnerLinkType就是定义这样的一个通道.
 
 先看下PartnerLinkType的例子.
 
