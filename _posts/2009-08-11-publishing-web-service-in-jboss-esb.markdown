@@ -129,7 +129,7 @@ We are using the following soap message in our client as input.
  <soapenv:Header/ >
  <soapenv:Body >
  <good:sayGoodbye >
-     <message&amp;gt;Goodbye!!
+     <message>Goodbye!!</message>
   </good:sayGoodbye >
  </soapenv:Body >
  </soapenv:Envelope >
