@@ -20,7 +20,7 @@ Here, we will create a freemarker template file, named review.ftl. the files con
 {% highlight xml %}
 <html>
 <body>
-<h2>Please review the request
+<h2>Please review the request</h2>
 <form action="${form.action}" method="POST" enctype="multipart/form-data">
 <#list outcome.values as transition>
 <input type="submit" name="outcome" value="${transition}">
@@ -31,9 +31,9 @@ Here, we will create a freemarker template file, named review.ftl. the files con
 {% endhighlight %}
 
 ##### Add the form attribute in task node#####
-As we said earlier, due to the <a href="https://jira.jboss.org/jira/browse/JBPM-2423">JBPM-2423 issue</a> in jBPM 4.0 GA, we need to update our jpdl to associate our task form template. the updated section is as following.
+As we said earlier, due to the [JBPM-2423 issue](https://jira.jboss.org/jira/browse/JBPM-2423) in jBPM 4.0 GA, we need to update our jpdl to associate our task form template. the updated section is as following.
 {% highlight xml %}
-<task assignee="alex" g="277,235,92,52" name="review" <span style="color: #ff0000;">form="review.ftl"</span>>
+<task assignee="alex" g="277,235,92,52" name="review" form="review.ftl">
   <transition g="-73,-25" name="approved" to="audit"/>
 </task>
 {% endhighlight %}

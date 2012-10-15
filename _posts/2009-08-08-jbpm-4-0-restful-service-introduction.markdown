@@ -78,9 +78,10 @@ Before you run the above code, you need to make sure that you've started the jBP
 
 Run the test code, you would get following result.
 
-
-> {"deployments":[{"id":"1","suspended":false,"name":"helloworld.bar","timestamp":1249805642238,"definitions":["helloworld-1"],"resourceNames":["review.ftl","META-INF/","META-INF/MANIFEST.MF","helloworld.jpdl.xml","helloworld.png"]}]}
-> deployment name is: helloworld.bar
+{% highlight java %}
+ {"deployments":[{"id":"1","suspended":false,"name":"helloworld.bar","timestamp":1249805642238,"definitions":["helloworld-1"],"resourceNames":["review.ftl","META-INF/","META-INF/MANIFEST.MF","helloworld.jpdl.xml","helloworld.png"]}]}
+ deployment name is: helloworld.bar
+{% endhighlight %}
 
 First one is the whole data in json format.
 

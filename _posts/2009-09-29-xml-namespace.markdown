@@ -13,7 +13,9 @@ status: publish
 XML的namespace属性类似java中的packagename,是为了使得唯一性.在xml schema, wsdl or bpel中,我们一般会看到如下的定义
 
 {% highlight xml %}
-<definitions name="echoWsdl"        targetNamespace="http://www.jboss.org/jeffyu/bpel/wsdl"        xmlns:tns="http://www.jboss.org/jeffyu/bpel/wsdl"        xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"        xmlns="http://schemas.xmlsoap.org/wsdl/"        xmlns:xsd="http://www.w3.org/2001/XMLSchema"        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+ <definitions name="echoWsdl"        targetNamespace="http://www.jboss.org/jeffyu/bpel/wsdl"        xmlns:tns="http://www.jboss.org/jeffyu/bpel/wsdl"        xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"        xmlns="http://schemas.xmlsoap.org/wsdl/"        xmlns:xsd="http://www.w3.org/2001/XMLSchema"        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+....
+ </definitions>
 {% endhighlight %}
 
 这里面,就要涉及到我们所要谈的default namespace 和 targetNamespace.

@@ -37,7 +37,6 @@ Different database vendor has its own syntax for showing tables, as I defined be
        <equals arg1="${database}" arg2="mysql" />;
  </condition>;
  
-
  <condition property="show.table.sql" value="select table_name from information_schema.tables where table_schema='public' and table_type='BASE TABLE';">;
        <equals arg1="${database}" arg2="postgres" />;
  </condition>;

@@ -131,7 +131,7 @@ public void run() {
         _lock.lock();
         try {
             long nextjob;
-            while ((nextjob = nextJobTime()) &amp;gt; 0 &amp;amp;&amp;amp; !_done)
+            while ((nextjob = nextJobTime()) > 0 &&!_done)
                 _activity.await(nextjob, TimeUnit.MILLISECONDS);
 
 

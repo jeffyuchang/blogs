@@ -97,14 +97,14 @@ _channel = channel;
 
 @Override
 public void run() {
-System.out.println(&quot;INVOKE Activity&quot;);
+System.out.println("INVOKE Activity");
 
-DemoChannel demoChannel2 = newChannel(DemoChannel.class, &quot;demo2&quot;);
+DemoChannel demoChannel2 = newChannel(DemoChannel.class, "demo2");
 instance(new RECIEVE(demoChannel2));
 object(new DemoChannelListener(demoChannel2) {
 public void onSuccess(String successInfo) {
  System.out.println(successInfo);
- _channel.onSuccess(&quot;INVOKE Done...&quot;);
+ _channel.onSuccess("INVOKE Done...");
 }
 
 public void onFailure(String errorString) {
@@ -124,8 +124,8 @@ _demoChannel = demoChannel;
 
 @Override
 public void run() {
-System.out.println(&quot;Receive Activity&quot;);
-_demoChannel.onSuccess(&quot;RECEIVE success...&quot;);
+System.out.println("Receive Activity");
+_demoChannel.onSuccess("RECEIVE success...");
 }
 }
 {% endhighlight %}
@@ -137,12 +137,12 @@ static class Process extends JacobRunnable {
 
 @Override
 public void run() {
-DemoChannel channel = newChannel(DemoChannel.class, &quot;demo&quot;);
+DemoChannel channel = newChannel(DemoChannel.class, "demo");
 instance(new INVOKE(channel));
 object(new DemoChannelListener(channel) {
 public void onSuccess(String successInfo) {
  System.out.println(successInfo);
- System.out.println(&quot;Process Done&quot;);
+ System.out.println("Process Done");
 }
 
 public void onFailure(String errorString) {
