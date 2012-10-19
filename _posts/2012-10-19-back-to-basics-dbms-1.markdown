@@ -95,19 +95,20 @@ Two types of index, one is *Dense*: one index entry per data tuple, the other on
 
 The Index data structure could be one of the following:
 
-- B-Tree Indexes
-- Bitmap Indexes
-- Tree indexes (kd-Trees, Quad Trees, R-Tree) *Note:* PostgreSQL is using GiST implemented the R-Tree since version 8.2
+- [B-Tree Indexes](http://en.wikipedia.org/wiki/B-tree)
+- [Bitmap Indexes](http://en.wikipedia.org/wiki/Bitmap_index)
+- Tree indexes ([kd-Trees](http://en.wikipedia.org/wiki/K-d_tree), [Quad Trees](http://en.wikipedia.org/wiki/Quadtree), [R-Tree](http://en.wikipedia.org/wiki/R-tree)) 
+  *Note:* PostgreSQL is using GiST implemented the R-Tree since version 8.2
 - Indexing with Signatures.
 
 ##### Join Relational Operation #####
 
 Join is important and potentially expensive operation, many methods have been developed for its implementation. Some implementations are:
 
-- Nested Loop Join
-- Block Nested Loop Join
-- Sort Merge Join
-- Hash Join. (variations: Simple Hash Join, Grace Hash Join, Hybrid Hash Join )
+- [Nested Loop Join](http://en.wikipedia.org/wiki/Nested_loop_join)
+- [Block Nested Loop Join](http://en.wikipedia.org/wiki/Block_nested_loop)
+- [Sort Merge Join](http://en.wikipedia.org/wiki/Sort-merge_join)
+- [Hash Join](http://en.wikipedia.org/wiki/Hash_join) (variations: Simple Hash Join, Grace Hash Join, Hybrid Hash Join )
 
 No single join algorithm is superior in some overall sense. Which algorithm is best for a given query depends on:
 
@@ -131,5 +132,5 @@ It parses the SQL into [Relational Algebra](http://en.wikipedia.org/wiki/Relatio
 
 From this course, I've mostly studied various data structures and algorithms to evalute the cost model of queries. As I said at the begining, the most important thing in database system is to keep the data in oder, while making the query as quick as possible. I didn't touch the transaction area in this one, and I'll write another dedicated entry for that topic.
 
-#### Reference #### 
+#### Reference ####
 1. [UNSW Database Implementation Course](http://mahler.cse.unsw.edu.au/webcms2/course/index.php?cid=2249)
