@@ -1,6 +1,6 @@
 --- 
 layout: post
-title: Back to Basics - review notes on Database System Implementation I
+title: Back To Basics - Review notes on Database System Implementation I
 tags: 
 - Database
 - Back to Basics
@@ -86,7 +86,8 @@ Two basic approaches for implementing the 'Select' efficiently:
 
 Indexing is a very important feature in Database, because it can improve the time cost of selection dramatically, esepcially for the big data in each row. Indexes are stored in separate files to data. 
 
-A relation/file may have: 
+A relation/file may have:
+
 - A index on single attribute. (useful for handling primary/secondary key queries e.g. one, range)
 - Separate indexes on many attributes. (useful for handling queries involving several fields)
 - A combined index incorporating many attributes. (multi-dimensional indexing for e.g. spatial, multimedia databases)
