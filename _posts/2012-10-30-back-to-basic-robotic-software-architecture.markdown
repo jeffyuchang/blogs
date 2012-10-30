@@ -1,6 +1,6 @@
 --- 
 layout: post
-title: Back To Basics -  Review notes on Robotic Software Architecture Course
+title: Back To Basics -  Review notes on Robot Software Architecture Course
 tags: 
 - Back to Basics
 - Artificial Intelligence
@@ -90,7 +90,7 @@ Because we don't have the T and R function, we can use the following techniques:
 Above is a list of bulletins that were taught in this course, guess it is a bit hard for others to follow due to its simplicity, most likely it is for myself use. :)
 
 #### Reference ####
-- [UNSW CS3431 Robotic Software Architecture Course](http://www.cse.unsw.edu.au/~cs3431/wiki/)
+- [UNSW CS3431 Robot Software Architecture Course](http://www.cse.unsw.edu.au/~cs3431/wiki/)
 - [Introdcution to Artificial Intelligence](https://www.ai-class.com)
 - [CS373 Programming A Robotic Car](http://www.udacity.com/overview/Course/cs373/CourseRev/apr2012)
 - [CS188.1x: Artificial Intelligence](https://www.edx.org/courses/BerkeleyX/CS188.1x/2012_Fall/about)
