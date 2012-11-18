@@ -19,6 +19,7 @@ status: publish
 
 可能有人会问，这和早几年前的[MIT的OpenCourseWare](http://ocw.mit.edu/index.htm)有什么区别?我个人觉得这就类似 Web 1.0 和 Web 2.0的区别.因为在OpenCourseWare中，你只能看录制好的录像，但是在Coursera中，和老师、同学的交互性会更强。Coursera的课程一般有明确的完成周数并列出各周所学内容，而且每个课程都有对应的论坛供来自世界各地的学生参与、讨论和quiz问题。
 比如Stanford的[算法设计I](https://www.coursera.org/course/algo)课程，总共6周，内容简要如下:
+
 * 每周大概有2个小时的录像.当然了,一个小话题一个录像,最长的一个录像不会超过20分钟.在录像中,还有quiz,考核你对所讲内容的理解.
 * 每周都有quiz,用来检测你这周对录像中内容的理解.
 * 每周都有programming assignment,用来检测你是否可以用你熟悉的语言来完成算法.这里面的数据都是大数据,使得你没办法去猜.
