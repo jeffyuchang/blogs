@@ -1,6 +1,6 @@
 --- 
 layout: post
-title: Introduction to SwitchYard - (Part I)
+title: Introduction to SwitchYard
 tags: 
 - JBoss
 - Java
@@ -62,8 +62,21 @@ Before we try anything interesting, we need to install the SwitchYard and its va
 
 - switchyard-as7-0.6.0.Final.zip: this one contains both the switchyard runtime and the JBoss AS7.
 - switchyard-site-assembly-0.6.0.Final.zip: this one is offline package for the eclipse based switchyard editor.
-- switchyard-tools-0.6.0.Final.zip: this one contains the switchyard web based console, forge plugin etc.
 
+###### SwitchYard editor installation ######
+
+Below is the steps that I installed the eclipse based tool.
+
+- Download the fresh Eclipse 3.7 (Indigo)
+- Install the JBoss tools ([http://download.jboss.org/jbosstools/updates/development/indigo/](http://download.jboss.org/jbosstools/updates/development/indigo/)), only select the 'JBoss Tools Abridged' from the checkboxes. 
+- Install the GEF Graphical Editing Framework([http://download.eclipse.org/tools/gef/updates/releases/](http://download.eclipse.org/tools/gef/updates/releases/)))
+- Install the SwitchYard tools from the downloaded switchyard-site-assembly-0.6.0.Final.zip
+
+###### Forge and switchyard plugin installation ######
+
+Below is the simple steps to install the Forge and switchyard plugin.
+
+- Download the Forge-1.0.2.Final version from [here]() 
 
 
 #### Footnotes ####
@@ -71,3 +84,4 @@ Before we try anything interesting, we need to install the SwitchYard and its va
 
 #### Reference ####
 1. [An (Impatient Newbie User’s) Introduction to Switchyard](https://community.jboss.org/en/switchyard/blog/2012/06/22/an-impatient-newbie-user-s-introduction-to-switchyard) By [Len Dimaggio](http://swqetesting.blogspot.com.au/)
+2. [SwitchYard project documentation](https://docs.jboss.org/author/display/SWITCHYARD/Home)
