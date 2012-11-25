@@ -198,10 +198,44 @@ public class HelloServiceTest {
 							<li>switchyard-openshift</li>
 						</ul>
 					</section>
+					<section>
+						<h2>Component Registration</h2>
+						<ul>
+							<li>Implements the org.switchyard.deploy.Component interface (You should extend the BaseComponent)</li>
+							<li>put your component full qualified name in the META-INF/services/org.switchyard.deploy.Component  file.</li>
+						</ul>
+						<pre><code>
+public interface Component {
+	Activator createActivator(ServiceDomain domain);
+	String getName();
+	void init(Configuration config);
+	void destroy();
+	......
+}
+						</code></pre>
+					</section>
+					<section>
+						<h2>Creating the Activator</h2>
+						<ul>
+							<li>Implements the org.switchyard.deploy.Activator interface (you should extend the BaseActivator)</li>
+							<li>implement methods accordingly, like implementing the Bindings or Service component</li>
+						</ul>
+						<pre><code>
+public interface Activator {
+  ServiceHandler activateBinding(QName name, BindingModel config);
+  void deactivateBinding(QName name, ServiceHandler handler);
+
+  ServiceHandler activateService(QName name, ComponentModel config);
+  void deactivateService(QName name, ServiceHandler handler);
+  ......
+}
+						</code></pre>
+					</section>
 				</section>
 
 				<section>
-					
+					<h2> Questions? </h2>
+					<img src="css/theme/images/q-a.jpg" />
 				</section>
 			</div>
 		  </div>
