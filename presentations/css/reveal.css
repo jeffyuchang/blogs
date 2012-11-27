@@ -276,8 +276,9 @@ body {
 
 .reveal code {
 	font-family: monospace;
+	font-size: 14px;
 	overflow: auto;
-	max-height: 400px;
+	max-height: 500px;
 }
 
 .reveal table th,
@@ -502,7 +503,7 @@ body {
 	height: 60%;
 	left: 50%;
 	top: 50%;
-	margin-top: -380px;
+	margin-top: -40%;
 	padding: 20px 0px;
 	overflow: visible;
 	z-index: 1;

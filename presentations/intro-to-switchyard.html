@@ -174,6 +174,69 @@ public class HelloServiceTest {
 </code></pre>
 					  </section>
 					<section>
+						<h2>SwitchYard In Action(3)</h2>
+					<pre><code>
+public final class HelloServiceTransformer {
+	@Transformer(to = "{urn:com.example.switchyard:judcon-china:0.0.1-SNAPSHOT}sayHelloResponse")
+	public Element transformStringToSayHelloResponse(String from) {
+		StringBuffer sbuffer = new StringBuffer();
+		sbuffer.append("&lt;sayHelloResponse xmlns=\"urn:com.example.switchyard:judcon-china:0.0.1-SNAPSHOT\"&gt;")
+	        .append("&lt;string&gt;" + from + "&lt;/string&gt;").append("&lt;/sayHelloResponse&gt;");
+		return toElement(sbuffer.toString());
+	}
+	@Transformer(from = "{urn:com.example.switchyard:judcon-china:0.0.1-SNAPSHOT}sayHello")
+	public String transformSayHelloToString(Element from) {
+		return new String(getElementValue(from, "urn:string"));
+	}						
+					</code></pre>
+					</section>
+					<section>
+						<h2>SwitchYard In Action(4)</h2>
+					<pre><code>
+  &lt;sca:composite name="judcon-china" targetNamespace="urn:com.example.switchyard:judcon-china:0.0.1-SNAPSHOT"&gt;
+    &lt;sca:component name="HelloServiceBean"&gt;
+      &lt;bean:implementation.bean class="com.example.switchyard.judcon_china.HelloServiceBean"/&gt;
+      &lt;sca:service name="HelloService"&gt;
+        &lt;sca:interface.java interface="com.example.switchyard.judcon_china.HelloService"/&gt;
+      &lt;/sca:service&gt;
+    &lt;/sca:component&gt;
+    &lt;sca:service name="HelloServicePortType" promote="HelloServiceBean/HelloService"&gt;
+      &lt;sca:interface.wsdl interface="HelloService.wsdl#wsdl.porttype(HelloServicePortType)"/&gt;
+      &lt;soap:binding.soap&gt;
+        &lt;soap:contextMapper/&gt;
+        &lt;soap:wsdl&gt;HelloService.wsdl&lt;/soap:wsdl&gt;
+        &lt;soap:wsdlPort&gt;HelloServicePort&lt;/soap:wsdlPort&gt;
+        &lt;soap:contextPath&gt;judcon-china&lt;/soap:contextPath&gt;
+      &lt;/soap:binding.soap&gt;
+    &lt;/sca:service&gt;
+  &lt;/sca:composite&gt;
+					</code></pre>
+					</section>
+					<section>
+						<h2>SwitchYard In Action(5)</h2>
+						<pre><code>
+@RunWith(SwitchYardRunner.class)
+@SwitchYardTestCaseConfig(
+        config = SwitchYardTestCaseConfig.SWITCHYARD_XML,
+        scanners = {BeanSwitchYardScanner.class, TransformSwitchYardScanner.class},
+        mixins = {CDIMixIn.class, HTTPMixIn.class})
+public class HelloServiceSoapTest {
+	
+    private HTTPMixIn httpMixIn;
+
+    @Test
+    public void testHelloService() throws Exception {
+        httpMixIn.postResourceAndTestXML("http://localhost:8080/judcon-china/HelloService", "/soap-request.xml", "/soap-response.xml");
+    }
+}
+						</code></pre>
+					</section>
+					<section>
+						<h2>SwitchYard In Action(6)</h2>
+						<img src="css/theme/images/monitor.png" />
+					</section>  
+
+					<section>
 						<img src="css/theme/images/demo-time.jpg" />
 					</section>
 				</section>
@@ -214,7 +277,7 @@ public interface Component {
 						</code></pre>
 					</section>
 					<section>
-						<h2>Creating the Activator</h2>
+						<h2>Creating your Activator</h2>
 						<ul>
 							<li>Implements the org.switchyard.deploy.Activator interface (you should extend the BaseActivator)</li>
 							<li>implement methods accordingly, like implementing the Bindings or Service component</li>
@@ -230,6 +293,34 @@ public interface Activator {
 }
 						</code></pre>
 					</section>
+					<section>
+						<h2>Creating your ServiceHandler</h2>
+						<pre><code>
+/**
+ * The role of a Handler is to handle messages and fault events during the
+ * course of a service invocation...
+ */
+public interface ExchangeHandler {
+	void handleMessage(Exchange exchange) throws HandlerException;
+	void handleFault(Exchange exchange);
+}
+						</code></pre>
+						<pre><code>
+/**
+ * Lifecycle-aware version of ExchangeHandler.  The deployer will invoke
+ * start() and stop() in accordance with the deployment's lifecycle.
+ */
+public interface ServiceHandler extends ExchangeHandler {
+    void start();
+    void stop();   
+}
+						</code></pre>						
+					</section>
+
+					<section>
+						
+					</section>
+
 				</section>
 				<section>
 					<h2> project information</h2>
