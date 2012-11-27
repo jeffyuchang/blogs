@@ -294,7 +294,7 @@ public interface Activator {
 						</code></pre>
 					</section>
 					<section>
-						<h2>Creating your ServiceHandler</h2>
+						<h2>Creating your Service Handler</h2>
 						<pre><code>
 /**
  * The role of a Handler is to handle messages and fault events during the
@@ -318,10 +318,85 @@ public interface ServiceHandler extends ExchangeHandler {
 					</section>
 
 					<section>
-						
+						<h2>Your Component Model/Configuration </h2>
+						<pre><code>
+&lt;schema targetNamespace="http://docs.oasis-open.org/ns/opencsa/sca/200903"
+        xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912"
+		xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+		xmlns="http://www.w3.org/2001/XMLSchema"
+		elementFormDefault="qualified"&gt;
+
+	&lt;!-- SCA-Assembly XML Schema --&gt;
+    &lt;import namespace="http://docs.oasis-open.org/ns/opencsa/sca/200912"/&gt;
+
+	<!-- SCA-BPEL Component Implementation Type -->
+	&lt;element name="implementation.bpel"
+		type="sca:BPELImplementation" substitutionGroup="sca:implementation" /&gt;
+
+	....
+&lt;/schema&gt;
+					</code></pre>
+				   </section>
+
+					<section>
+						<h2>Your Component Model/Configuration (2) </h2>
+						<pre><code>
+public interface BPELComponentImplementationModel extends ComponentImplementationModel {
+	.....
+}
+						</code></pre>
+						<pre><code>
+public class V1BPELComponentImplementationModel extends V1ComponentImplementationModel implements... {
+	......
+}
+						</code></pre>						
+					</section>
+
+					<section>
+						<h2>Your Component Model/Configuration (3)</h2>
+						<pre><code>
+public class V1BPELMarshaller extends V1CompositeMarshaller {
+    /**
+     * Reads in the Configuration, looking for "implementation.bpel".
+     * If not found, it falls back to the super class (V1CompositeMarshaller).
+     */
+    @Override
+    public Model read(Configuration config) {
+        String name = config.getName();
+        if (IMPLEMENTATION_BPEL.equals(name)) {
+            return new V1BPELComponentImplementationModel(config, getDescriptor());
+        }
+        return super.read(config);
+    }	
+}
+						</code></pre>						
+					</section>
+
+					<section>
+						<h2>Your Component Model/Configuration (4)</h2>
+						<ul>
+							<li>creating the descriptor.properties with content like following in org.switchyard.config.model path</li>
+						</ul>
+						<pre><code>
+bpel1.namespace=http://docs.oasis-open.org/ns/opencsa/sca/200903
+bpel1.schema=bpel-v1.xsd
+bpel1.location=/org/switchyard/component/bpel/config/model/v1/
+bpel1.marshaller=org.switchyard.component.bpel.config.model.v1.V1BPELMarshaller
+					   </code></pre>
+					</section>
+
+					<section>
+						<h2>Review of creating the component</h2>
+						<ul>
+							<li>defining an xsd (configuration) for your component </li>
+							<li>implementing the serviceHandler (specifically, ExchangeHandler) for the message invocation</li>
+							<li>implementing the Activator for the deployment </li>
+							<li>implementing the Component and register it in SwitchYard</li>
+						</ul>
 					</section>
 
 				</section>
+
 				<section>
 					<h2> project information</h2>
 					<ul>
