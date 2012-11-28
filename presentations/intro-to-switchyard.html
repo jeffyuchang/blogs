@@ -108,7 +108,8 @@
 						<ul>
 							<li>SOAP Binding</li>
 							<li>RESTEasy Binding</li>
-							<li>Camel Bindings, like File Binding, FTP binding etc</li>
+							<li>Camel Bindings: file,ftp,ftps,amqp,atom,generic,jms,jpa,mail,mock,
+								netty,quartz,seda,sftp,sql,timer,direct</li>
 							<li>HortnetQ Binding</li>
 							<li>JCA Binding</li>
 							<li>HTTP Binding</li>
@@ -255,6 +256,17 @@ public class HelloServiceSoapTest {
 							<li>switchyard-openshift</li>
 						</ul>
 					</section>
+
+					<section>
+						<h2>outline of creating a component</h2>
+						<ul>
+							<li>defining an xsd (configuration) for your component </li>
+							<li>implementing the Component and register it in SwitchYard</li>
+							<li>implementing the Activator for the deployment </li>
+							<li>implementing the serviceHandler (specifically, ExchangeHandler) for the message invocation</li>
+						</ul>
+					</section>
+
 					<section>
 						<h2>Component Registration</h2>
 						<ul>
@@ -378,16 +390,6 @@ bpel1.schema=bpel-v1.xsd
 bpel1.location=/org/switchyard/component/bpel/config/model/v1/
 bpel1.marshaller=org.switchyard.component.bpel.config.model.v1.V1BPELMarshaller
 					   </code></pre>
-					</section>
-
-					<section>
-						<h2>Review of creating the component</h2>
-						<ul>
-							<li>defining an xsd (configuration) for your component </li>
-							<li>implementing the serviceHandler (specifically, ExchangeHandler) for the message invocation</li>
-							<li>implementing the Activator for the deployment </li>
-							<li>implementing the Component and register it in SwitchYard</li>
-						</ul>
 					</section>
 
 				</section>

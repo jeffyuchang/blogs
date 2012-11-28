@@ -7,8 +7,8 @@ based on dark.css by Ivan Sagalaev
 
 pre code {
   display: block; padding: 0.5em;
-  background: #3F3F3F;
-  color: #DCDCDC;
+  background: white;
+  color: black;
 }
 
 pre .keyword,
@@ -65,7 +65,7 @@ pre .apache .tag,
 pre .nginx .built_in,
 pre .tex .command,
 pre .input_number {
-    color: #efef8f;
+    color: green;
 }
 
 pre .dos .winutils,
