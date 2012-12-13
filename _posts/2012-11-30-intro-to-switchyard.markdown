@@ -1,11 +1,13 @@
 --- 
 layout: post
-title: Building your Own Service In SwitchYard
+title: Building your Own Service In SwitchYard (JUDCon China)
 tags: 
 - JBoss
 - ESB
 - SwitchYard
 - Java
+- JUDCon
+- Events
 ---
 
 Just finished the ["Building Your Own Service In SwitchYard" presentation](http://jeff.familyyu.net/presentations/intro-to-switchyard.html) in [JUDCon 2012 China](http://www.jboss.org/events/JUDCon/2012/china), hopefully it helps some users/developers using the SWitchYard, or even better, which motivates some people to take part in the SwitchYard comunity, be asking questions, helping the forum question or even better to contribute ideas/codes to the SwitchYard.
